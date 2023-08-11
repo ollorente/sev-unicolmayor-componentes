@@ -27,25 +27,25 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/componentes',
     name: 'Components',
-    component: () => import('./views/Component/components.vue'),
+    component: () => import('./views/Resource/resources.vue'),
     meta: { isAuthenticated: true }
   },
   {
     path: '/componentes/agregar',
     name: 'ComponentNew',
-    component: () => import('./views/Component/componentNew.vue'),
+    component: () => import('./views/Resource/resourceNew.vue'),
     meta: { isAuthenticated: true }
   },
   {
     path: '/componentes/:id',
     name: 'Component',
-    component: () => import('./views/Component/component.vue'),
+    component: () => import('./views/Resource/resource.vue'),
     meta: { isAuthenticated: true }
   },
   {
     path: '/componentes/:id/editar',
     name: 'ComponentEdit',
-    component: () => import('./views/Component/componentEdit.vue'),
+    component: () => import('./views/Resource/resourceEdit.vue'),
     meta: { isAuthenticated: true }
   },
   {

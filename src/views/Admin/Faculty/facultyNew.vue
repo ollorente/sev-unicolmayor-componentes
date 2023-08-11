@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue"
-import { useRouter } from "vue-router";
+import { useRouter } from "vue-router"
 import AdminLayout from "./../../../layouts/admin.vue"
+import UIAlert from "./../../../components/UI/Alert.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
-import { IFaculty } from "./../../../utils/types"
-import { fsCreate } from "./../../../utils/firestore";
+import { Faculty, IFaculty } from "./../../../utils/types"
+import { fsCreate } from "./../../../utils/firestore"
 
 const router = useRouter()
 
@@ -22,16 +23,18 @@ const addItem = async () => {
   isShow.value = true
 
   try {
-    const result = await fsCreate("faculties", faculty)
+    const data = Faculty(faculty)
+
+    const result = await fsCreate("faculties", data)
 
     if (result) {
-      isShow.value = false
-
-      await router.push("/administracion/facultades")
+      await router.push("/admin/facultades")
     }
   } catch (error) {
     Error.value = error
     isError.value = true
+  } finally {
+    isShow.value = false
   }
 }
 </script>
@@ -45,13 +48,13 @@ const addItem = async () => {
     <div class="col-12">
       <UISpinner v-if="isShow">Loading...</UISpinner>
 
-      <div v-else-if="isError">{{ Error }}</div>
+      <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
 
       <div v-else class="card border-0 shadow-sm my-3">
         <div class="card-body">
           <form @submit.prevent="addItem">
             <div class="mb-3">
-              <label for="name" class="form-label">Título</label>
+              <label for="name" class="form-label fw-bold">Título</label>
               <input type="text" class="form-control" id="name" placeholder="Título" v-model="faculty.name" />
             </div>
 

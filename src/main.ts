@@ -44,12 +44,6 @@ const routes: RouteRecordRaw[] = [
     meta: { isAuthenticated: true }
   },
   {
-    path: '/admin/componentes/:id/editar',
-    name: 'AdminComponentEdit',
-    component: () => import('./views/Admin/Resource/resourceEdit.vue'),
-    meta: { isAuthenticated: true }
-  },
-  {
     path: '/admin/facultades',
     name: 'AdminFaculties',
     component: () => import('./views/Admin/Faculty/faculties.vue'),
@@ -68,12 +62,6 @@ const routes: RouteRecordRaw[] = [
     meta: { isAuthenticated: true }
   },
   {
-    path: '/admin/facultades/:id/editar',
-    name: 'AdminFacultyEdit',
-    component: () => import('./views/Admin/Faculty/facultyEdit.vue'),
-    meta: { isAuthenticated: true }
-  },
-  {
     path: '/admin/programas',
     name: 'AdminPrograms',
     component: () => import('./views/Admin/Program/programs.vue'),
@@ -89,12 +77,6 @@ const routes: RouteRecordRaw[] = [
     path: '/admin/programas/:id',
     name: 'AdminProgram',
     component: () => import('./views/Admin/Program/program.vue'),
-    meta: { isAuthenticated: true }
-  },
-  {
-    path: '/admin/programas/:id/editar',
-    name: 'AdminProgramEdit',
-    component: () => import('./views/Admin/Program/programEdit.vue'),
     meta: { isAuthenticated: true }
   },
   // = CLIENT =======================================================

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { User } from "./../utils/types"
@@ -6,6 +7,10 @@ import { auth } from './../utils/firebase'
 import { fsCreate, fsGet } from './../utils/firestore'
 
 const router = useRouter()
+
+const Error = ref()
+const isError = ref(false)
+const isShow = ref(true)
 
 const signinGoogle = async () => {
   const provider = new GoogleAuthProvider()
@@ -49,7 +54,11 @@ const signinGoogle = async () => {
   <div class="bg-light overflow-auto" style="height: 100dvh">
     <main class="form-signin w-100 h-100 d-flex flex-column m-auto py-5">
 
-      <div class="card border-0 shadow-sm py-5 px-4 px-md-5 my-auto">
+      <UISpinner v-if="isShow">Loading...</UISpinner>
+
+      <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
+
+      <div v-else class="card border-0 shadow-sm py-5 px-4 px-md-5 my-auto">
         <img class="mb-4 mx-auto"
           src="https://res.cloudinary.com/un1c0lm4y0r/image/upload/v1666216346/mascota-subdireccion.png"
           alt="Mascota Eviut" style="width: 8rem" />

@@ -6,6 +6,7 @@ import { VueEditor } from "vue3-editor"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./../../../utils/firebase"
 import AdminLayout from "./../../../layouts/admin.vue"
+import UIAlert from "./../../../components/UI/Alert.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
 import { DATE, IFaculty, IProgram, IResource, Resource } from './../../../utils/types'
@@ -152,7 +153,7 @@ onMounted(() => getFaculties())
 
     <UISpinner v-if="isShow"></UISpinner>
 
-    <div v-else-if="isError">{{ Error }}</div>
+    <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
 
     <div v-else class="card border-0 shadow-sm my-3">
       <div class="card-body fst-italic">* Campo obigatorio</div>

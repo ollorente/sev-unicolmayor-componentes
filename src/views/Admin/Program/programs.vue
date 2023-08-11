@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
 import AdminLayout from "./../../../layouts/admin.vue"
+import UIAlert from "./../../../components/UI/Alert.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 import UINone from "./../../../components/UI/None.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
@@ -47,7 +48,7 @@ onMounted(() => getItems())
 
     <UISpinner v-if="isShow">Loading...</UISpinner>
 
-    <div v-else-if="isError">{{ Error }}</div>
+    <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
 
     <div v-else class="card border-0 shadow-sm my-3">
       <div class="card-body">

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import AdminLayout from "./../../layouts/admin.vue"
+import UIHead from "./../../components/Client/Head.vue"
 </script>
 
 <template>
   <AdminLayout>
-    <h1>Dashboard</h1>
+    <UIHead>
+      Dashboard
+    </UIHead>
   </AdminLayout>
 </template>
 

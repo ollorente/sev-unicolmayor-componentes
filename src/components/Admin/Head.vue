@@ -37,7 +37,7 @@ const props = defineProps({
 
 <template>
   <div class="d-flex justify-content-between align-items-center">
-    <div class=""><h1 class="h2"><slot></slot></h1></div>
+    <div class=""><h1 class="h3"><slot></slot></h1></div>
     <div class="">
       <router-link v-if="props.remove" :to="props.removeUrl" role="button" class="btn btn-outline-danger btn-sm rounded-pill mx-1 py-1 px-3">Eliminar</router-link>
       <router-link v-if="props.edit" :to="props.editUrl" role="button" class="btn btn-warning btn-sm rounded-pill mx-1 py-1 px-3">Editar</router-link>

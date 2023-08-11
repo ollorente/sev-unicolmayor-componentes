@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AdminLayout from "./../../layouts/admin.vue"
-import UIHead from "./../../components/Client/Head.vue"
+import UIHead from "./../../components/Admin/Head.vue"
 </script>
 
 <template>

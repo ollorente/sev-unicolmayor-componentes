@@ -9,7 +9,7 @@ import UIHead from "./../../components/Client/Head.vue"
       Facultades
     </UIHead>
 
-    <div class="card border-0 shadow my-3">
+    <div class="card border-0 shadow-sm my-3">
       <div class="card-body">
         <h4 class="card-title">Title</h4>
         <p class="card-text">Text</p>

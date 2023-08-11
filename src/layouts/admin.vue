@@ -47,7 +47,9 @@ const logout = async () => {
       <div class="row">
 
         <div class="col-12">
-          <div class="d-none d-lg-block card border-0 shadow-sm mb-4 p-3 pb-3 fw-bold fs-1 text-white"></div>
+          <div class="d-none d-lg-block card border-0 shadow-sm mb-4 p-3 pb-3 fw-bold fs-1 text-white sky">
+            ADMIN - Programas virtuales
+          </div>
         </div>
 
         <nav class="navbar navbar-expand-lg col-lg-2 align-items-start">
@@ -99,6 +101,11 @@ const logout = async () => {
 </template>
 
 <style scoped>
+.sky {
+  background-image: url("../assets/img/196655.webp");
+  background-position: center center;
+}
+
 .nav-link:hover, button:hover {
   opacity: 0.6;
   background-color: #ffc107;

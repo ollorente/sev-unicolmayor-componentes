@@ -154,7 +154,7 @@ onMounted(() => getFaculties())
 
     <div v-else-if="isError">{{ Error }}</div>
 
-    <div v-else class="card border-0 shadow my-3">
+    <div v-else class="card border-0 shadow-sm my-3">
       <div class="card-body fst-italic">* Campo obigatorio</div>
       <div class="card-body">
         <form @prevent.default="addItem">

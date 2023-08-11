@@ -6,7 +6,7 @@ import { VueEditor } from "vue3-editor"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./../../../utils/firebase"
 import AdminLayout from "./../../../layouts/admin.vue"
-import ClientHead from "./../../../components/Client/Head.vue"
+import UIHead from "./../../../components/Admin/Head.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
 import { DATE, IFaculty, IProgram, IResource, Resource } from './../../../utils/types'
 import { fsCreate, fsList, fsListProgramsById } from "./../../../utils/firestore"
@@ -146,15 +146,15 @@ onMounted(() => getFaculties())
 
 <template>
   <AdminLayout>
-    <ClientHead back backUrl="/admin/componentes">
+    <UIHead back backUrl="/admin/componentes">
       Agregar componente
-    </ClientHead>
+    </UIHead>
 
     <UISpinner v-if="isShow"></UISpinner>
 
     <div v-else-if="isError">{{ Error }}</div>
 
-    <div v-else class="card border-0 shadow my-3">
+    <div v-else class="card border-0 shadow-sm my-3">
       <div class="card-body fst-italic">* Campo obigatorio</div>
       <div class="card-body">
         <form @prevent.default="addItem">

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import AdminLayout from "./../../../layouts/admin.vue"
-import UIHead from "./../../../components/Client/Head.vue"
+import UIHead from "./../../../components/Admin/Head.vue"
 </script>
 
 <template>
   <AdminLayout>
-    <UIHead back backUrl="/admin/facultades">
+    <UIHead back backUrl="/admin/facultades" edit :editUrl="`/admin/facultades/${$route.params.id}/editar`" remove removeUrl="remove">
       Facultad
     </UIHead>
 
-    <div class="card border-0 shadow my-3">
+    <div class="card border-0 shadow-sm my-3">
       <div class="card-body">
         <h4 class="card-title">Title</h4>
         <p class="card-text">Text</p>

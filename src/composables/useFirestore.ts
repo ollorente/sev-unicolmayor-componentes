@@ -1,6 +1,6 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore"
 import { db } from "./../utils/firebase"
-// import { FB_APP_ID, FB_APP_NAME } from "./../utils/types"
+import useTypes from "./useTypes"
 const { FB_APP_ID, FB_APP_NAME } = useTypes()
 
 export default () => {

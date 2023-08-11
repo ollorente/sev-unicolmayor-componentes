@@ -1,68 +1,11 @@
 import { v4 } from "uuid"
+import { ICheck, IFaculty, IProgram, IResource, IRole, IUser } from "./../utils/types"
+
+const DATE = new Date().toISOString()
+const FB_APP_ID = "etP9QbnP2xhmoDb5C2mF"
+const FB_APP_NAME = "moodle"
 
 export default () => {
-  const DATE = new Date().toISOString()
-  const FB_APP_ID = "etP9QbnP2xhmoDb5C2mF"
-  const FB_APP_NAME = "moodle"
-
-  // = INTERFACES =====================================================
-
-  interface IBase {
-    readonly createdAt?: string
-    readonly id?: string
-    isActive?: boolean
-    isLock?: boolean
-    updatedAt?: string
-  }
-
-  interface ICheck {
-    check: boolean
-    createdAt: string
-    updatedAt?: string
-    userId: string
-  }
-
-  interface IFaculty extends IBase {
-    name: string
-  }
-
-  interface IProgram extends IBase {
-    facultyId: string
-    name: string
-  }
-
-  interface IResource extends IBase {
-    approved: ICheck
-    bibliography: string
-    component: string
-    content: string
-    elaborated: ICheck
-    facultyId: string
-    index: string
-    integrated: ICheck
-    introduction: string
-    programId: string
-    revised: ICheck
-    summary: string
-    teacher: string
-    title: string
-    unit: string
-  }
-
-  interface IRole extends IBase {
-    description?: string
-    name: string
-  }
-
-  interface IUser extends IBase {
-    email: string
-    image: string
-    name: string
-    phone: string
-    provider: string
-    roles: Array<string>
-  }
-
   // = MODELS =========================================================
 
   const Check = (db: ICheck) => {
@@ -198,12 +141,6 @@ export default () => {
     DATE,
     FB_APP_ID,
     FB_APP_NAME,
-    ICheck,
-    IFaculty,
-    IProgram,
-    IResource,
-    IRole,
-    IUser,
     Check,
     Faculty,
     RefFaculty,

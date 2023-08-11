@@ -1,8 +1,7 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore"
-import { db } from "../utils/firebase"
-
-const FB_APP_ID = "etP9QbnP2xhmoDb5C2mF"
-const FB_APP_NAME = "moodle"
+import { db } from "./../utils/firebase"
+// import { FB_APP_ID, FB_APP_NAME } from "./../utils/types"
+const { FB_APP_ID, FB_APP_NAME } = useTypes()
 
 export default () => {
   const fsCreate = async (table: string, data: any) => {
@@ -48,6 +47,24 @@ export default () => {
     }
   }
 
+  const fsListProgramsById = async (table: string, id: string) => {
+    try {
+      const q = query(collection(db, FB_APP_NAME, FB_APP_ID, table), where("facultyId", "==", id), where("isLock", "==", false))
+
+      const querySnapshot = await getDocs(q)
+
+      let items: any = []
+
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data())
+      })
+
+      return items.length > 0 ? items : []
+    } catch (error) {
+      return error
+    }
+  }
+
   const fsRemove = async (table: string, id: string) => {
     try {
       await deleteDoc(doc(db, FB_APP_NAME, FB_APP_ID, table, id))
@@ -70,6 +87,12 @@ export default () => {
     }
   }
 
-  return { fsCreate, fsGet, fsList, fsRemove, fsUpdate }
+  return {
+    fsCreate,
+    fsGet,
+    fsList,
+    fsListProgramsById,
+    fsRemove,
+    fsUpdate,
+  }
 }
-

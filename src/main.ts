@@ -18,12 +18,86 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/Login.vue'),
     meta: { isAuthenticated: false }
   },
+  // = ADMINISTRATOR ================================================
   {
     path: '/admin',
     name: 'Dashboard',
     component: () => import('./views/Admin/Dashboard.vue'),
     meta: { isAuthenticated: true }
   },
+  {
+    path: '/admin/componentes',
+    name: 'AdminComponents',
+    component: () => import('./views/Admin/Resource/resources.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/componentes/agregar',
+    name: 'AdminComponentNew',
+    component: () => import('./views/Admin/Resource/resourceNew.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/componentes/:id',
+    name: 'AdminComponent',
+    component: () => import('./views/Admin/Resource/resource.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/componentes/:id/editar',
+    name: 'AdminComponentEdit',
+    component: () => import('./views/Admin/Resource/resourceEdit.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/facultades',
+    name: 'AdminFaculties',
+    component: () => import('./views/Admin/Faculty/faculties.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/facultades/agregar',
+    name: 'AdminFacultyNew',
+    component: () => import('./views/Admin/Faculty/faculties.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/facultades/:id',
+    name: 'AdminFaculty',
+    component: () => import('./views/Admin/Faculty/faculty.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/facultades/:id/editar',
+    name: 'AdminFacultyEdit',
+    component: () => import('./views/Admin/Faculty/faculty.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/programas',
+    name: 'AdminPrograms',
+    component: () => import('./views/Admin/Program/programs.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/programas/agregar',
+    name: 'AdminProgramNew',
+    component: () => import('./views/Admin/Program/programs.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/programas/:id',
+    name: 'AdminProgram',
+    component: () => import('./views/Admin/Program/program.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/programas/:id/editar',
+    name: 'AdminProgramEdit',
+    component: () => import('./views/Admin/Program/program.vue'),
+    meta: { isAuthenticated: true }
+  },
+  // = CLIENT =======================================================
   {
     path: '/componentes',
     name: 'Components',
@@ -72,6 +146,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/Program/program.vue'),
     meta: { isAuthenticated: true }
   },
+  // = GENERAL ======================================================
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',

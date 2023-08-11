@@ -195,7 +195,7 @@ export default () => {
   }
 
   return {
-    DATE
+    DATE,
     FB_APP_ID,
     FB_APP_NAME,
     ICheck,

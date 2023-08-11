@@ -3,6 +3,8 @@ import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
+import UIMandatory from "./../../../components/UI/Mandatory.vue"
+import UISpinner from "./../../../components/UI/Spinner.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 import { Faculty, IFaculty } from "./../../../utils/types"
 import { fsCreate } from "./../../../utils/firestore"
@@ -12,18 +14,18 @@ const router = useRouter()
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(false)
-const faculty = reactive<IFaculty>({
+const item = reactive<IFaculty>({
   name: "",
   isActive: true,
 })
 
 const addItem = async () => {
-  if (!faculty.name) return
+  if (!item.name) return
 
   isShow.value = true
 
   try {
-    const data = Faculty(faculty)
+    const data = Faculty(item)
 
     const result = await fsCreate("faculties", data)
 
@@ -51,17 +53,20 @@ const addItem = async () => {
       <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
 
       <div v-else class="card border-0 shadow-sm my-3">
+        <UIMandatory />
+
         <div class="card-body">
           <form @submit.prevent="addItem">
             <div class="mb-3">
               <label for="name" class="form-label fw-bold">Título</label>
-              <input type="text" class="form-control" id="name" placeholder="Título" v-model="faculty.name" />
+              <input type="text" class="form-control" id="name" placeholder="Título" v-model="item.name" required
+                autofocus />
             </div>
 
             <div class="mb-3">
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="isActive" :checked="faculty.isActive"
-                  v-model="faculty.isActive" />
+                <input class="form-check-input" type="checkbox" role="switch" id="isActive" :checked="item.isActive"
+                  v-model="item.isActive" />
                 <label class="form-check-label" for="isActive">Activo</label>
               </div>
             </div>

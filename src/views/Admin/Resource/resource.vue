@@ -2,6 +2,8 @@
 import { ref } from "vue"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
+import UIMandatory from "./../../../components/UI/Mandatory.vue"
+import UISpinner from "./../../../components/UI/Spinner.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 
 const Error = ref()
@@ -21,6 +23,8 @@ const isShow = ref(true)
     <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
 
     <div v-else class="card border-0 shadow-sm my-3">
+      <UIMandatory />
+
       <div class="card-body">
         <h4 class="card-title">Title</h4>
         <p class="card-text">Text</p>

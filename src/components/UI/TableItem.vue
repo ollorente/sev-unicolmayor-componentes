@@ -25,9 +25,9 @@ const props = defineProps({
 <template>
   <li class="list-group-item px-0">
     <RouterLink :to="props.url" class="d-flex justify-content-between align-items-start text-decoration-none text-dark">
-      <div class="ms-2 me-auto"><b>{{ props.index }}</b>. {{ props.name }}</div>
-      <UIIconCircleSolid v-if="props.isActive" class="fs-6" />
-      <UIIconCircle v-else class="fs-6" />
+      <div class="ms-2 me-auto d-flex"><div class="fw-bold">{{ props.index }}. </div><div class="ms-2">{{ props.name }}</div></div>
+      <UIIconCircleSolid v-if="props.isActive" class="text-primary mx-2" />
+      <UIIconCircle v-else class="text-primary mx-2" />
     </RouterLink>
   </li>
 </template>

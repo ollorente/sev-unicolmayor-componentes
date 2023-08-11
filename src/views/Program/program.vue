@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import CustomLayout from "./../../layouts/custom.vue"
 import UIAlert from "./../../components/UI/Alert.vue"
+import UISpinner from "./../../components/UI/Spinner.vue"
 import UIHead from "./../../components/Client/Head.vue"
 
 const Error = ref()

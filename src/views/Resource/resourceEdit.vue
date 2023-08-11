@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CustomLayout from "./../../layouts/custom.vue"
 import UIAlert from "./../../components/UI/Alert.vue"
+import UISpinner from "./../../components/UI/Spinner.vue"
 import UIHead from "./../../components/Client/Head.vue"
 import { ref } from "vue"
 

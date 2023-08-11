@@ -3,6 +3,8 @@ import { onMounted, reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
+import UIMandatory from "./../../../components/UI/Mandatory.vue"
+import UISpinner from "./../../../components/UI/Spinner.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 import { fsGet, fsRemove, fsUpdate } from "./../../../utils/firestore"
 
@@ -98,11 +100,13 @@ onMounted(() => getItem())
     <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
 
     <div v-else class="card border-0 shadow-sm my-3">
+      <UIMandatory />
+
       <div class="card-body">
         <form @submit.prevent="updateItem">
           <div class="mb-3">
-            <label for="name" class="form-label">Título</label>
-            <input type="text" class="form-control" id="name" placeholder="Título" v-model="item.name" />
+            <label for="name" class="form-label">Título *</label>
+            <input type="text" class="form-control" id="name" placeholder="Título *" v-model="item.name" required />
           </div>
 
           <div class="row">
@@ -115,7 +119,7 @@ onMounted(() => getItem())
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 d-none">
               <div class="mb-3">
                 <div class="form-check form-switch">
                   <input class="form-check-input" type="checkbox" role="switch" id="isLock" :checked="item.isLock"
@@ -149,7 +153,8 @@ onMounted(() => getItem())
         </form>
       </div>
       <div class="card-footer bg-transparent text-end">
-        <button class="btn btn-outline-danger btn-sm rounded-pill mx-1 py-1 px-3" role="button" @click="removeItem">Eliminar</button>
+        <button class="btn btn-outline-danger btn-sm rounded-pill mx-1 py-1 px-3" role="button"
+          @click="removeItem">Eliminar</button>
       </div>
     </div>
   </AdminLayout>

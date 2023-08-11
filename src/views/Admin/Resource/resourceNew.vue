@@ -8,6 +8,7 @@ import { auth } from "./../../../utils/firebase"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
+import UIMandatory from "./../../../components/UI/Mandatory.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
 import { DATE, IFaculty, IProgram, IResource, Resource } from './../../../utils/types'
 import { fsCreate, fsList, fsListProgramsById } from "./../../../utils/firestore"
@@ -156,7 +157,8 @@ onMounted(() => getFaculties())
     <UIAlert v-else-if="isError" alert="danger">{{ Error }}</UIAlert>
 
     <div v-else class="card border-0 shadow-sm my-3">
-      <div class="card-body fst-italic">* Campo obigatorio</div>
+      <UIMandatory />
+
       <div class="card-body">
         <form @prevent.default="addItem">
           <div class="form-floating mb-3">
@@ -207,8 +209,7 @@ onMounted(() => getFaculties())
 
           <div class="mb-3">
             <label for="index" class="form-label fw-bold">Índice *</label>
-            <vue-editor id="index" v-model="resource.index" class="rounded"
-              required></vue-editor>
+            <vue-editor id="index" v-model="resource.index" class="rounded" required></vue-editor>
           </div>
 
           <div class="mb-3">

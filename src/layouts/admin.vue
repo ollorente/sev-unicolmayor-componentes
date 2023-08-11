@@ -2,8 +2,8 @@
 import { useRouter } from "vue-router"
 import { signOut } from "firebase/auth"
 import { auth } from "../utils/firebase"
-import ClientFooter from "./../components/Client/Footer.vue"
-import ClientHeader from "./../components/Client/Header.vue"
+import AdminFooter from "./../components/Admin/Footer.vue"
+import AdminHeader from "./../components/Admin/Header.vue"
 
 const router = useRouter()
 
@@ -84,19 +84,19 @@ const logout = async () => {
 
           <slot></slot>
 
-          <ClientFooter></ClientFooter>
+          <AdminFooter></AdminFooter>
         </div>
       </div>
     </div>
   </div>
   <div class="w-100 h-100 d-none">
-    <ClientHeader />
+    <AdminHeader />
 
     <main class="container mx-auto">
       <slot></slot>
     </main>
 
-    <ClientFooter />
+    <AdminFooter />
   </div>
 </template>
 

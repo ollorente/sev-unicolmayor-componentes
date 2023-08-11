@@ -17,7 +17,7 @@ const items = ref<IProgram[]>([])
 
 const getItems = async () => {
   try {
-    const result = await fsList("programas")
+    const result = await fsList("programs")
 
     result.sort((a: any, b: any) => {
       if (a.name > b.name) {
@@ -30,10 +30,11 @@ const getItems = async () => {
     })
 
     items.value = result
-    isShow.value = false
   } catch (error) {
     Error.value = error
     isError.value = true
+  } finally {
+    isShow.value = false
   }
 }
 
@@ -54,7 +55,7 @@ onMounted(() => getItems())
       <div class="card-body">
         <UITable title="Programa">
           <UITableItem v-if="items.length > 0" v-for="(item, index) in items" :key="item.id" :index="index + 1"
-            :name="item.name" :isActive="item.isActive" :url="`/admin/programs/${item.id}`">
+            :name="item.name" :isActive="item.isActive" :url="`/admin/programas/${item.id}`">
           </UITableItem>
 
           <UINone v-else></UINone>

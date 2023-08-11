@@ -7,16 +7,17 @@ import UIMandatory from "./../../../components/UI/Mandatory.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 import { IFaculty, IProgram } from "./../../../utils/types"
-import { fsGet, fsList, fsRemove, fsUpdate } from "./../../../utils/firestore"
+import { fsCreate, fsGet, fsList, fsRemove, fsUpdate } from "./../../../utils/firestore"
 
 const route = useRoute()
 const router = useRouter()
 
-const id = String(route.params.ide)
+const id = String(route.params.id)
 const Error = ref()
 const isError = ref(false)
-const isShow = ref(true)
+const isShow = ref(false)
 const faculties = ref<IFaculty[]>([])
+const oldFacultyId = ref<string>()
 const item = reactive<IProgram>({
   createdAt: "",
   facultyId: "",
@@ -28,12 +29,13 @@ const item = reactive<IProgram>({
 })
 
 const getItem = async () => {
+  isShow.value = true
+
   try {
     const items: IFaculty[] = await getFaculties()
     faculties.value = items
 
     const result: any = await fsGet("programs", id)
-    console.log("🚀 ~ file: program.vue:36 ~ getItem ~ result:", result)
 
     // @ts-ignore
     item.createdAt = result.createdAt
@@ -45,10 +47,12 @@ const getItem = async () => {
     item.name = result.name
     item.updatedAt = result.updatedAt
 
-    isShow.value = false
+    oldFacultyId.value = result.facultyId
   } catch (error) {
     Error.value = error
     isError.value = true
+  } finally {
+    isShow.value = false
   }
 }
 
@@ -56,7 +60,7 @@ const updateItem = async () => {
   try {
     isShow.value = true
 
-    const data = {
+    const data: any = {
       facultyId: item.facultyId,
       isActive: item.isActive,
       isLock: item.isLock,
@@ -64,8 +68,19 @@ const updateItem = async () => {
       updatedAt: new Date().toISOString(),
     }
 
+    if (oldFacultyId.value !== data.facultyId) {
+      await fsRemove(`faculties/${oldFacultyId.value}/programs`, id)
+    }
+
+    if (data.facultyId) {
+      await fsCreate(`faculties/${item.facultyId}/programs`, item)
+    }
+
     await fsUpdate("programs", id, data)
-    await fsUpdate(`faculties/${data.facultyId}/programs`, id, data)
+
+    if (data.facultyId) {
+      await fsUpdate(`faculties/${data.facultyId}/programs`, id, data)
+    }
 
     await getItem()
   } catch (error) {
@@ -81,7 +96,9 @@ const removeItem = async () => {
     isShow.value = true
 
     const result: any = await fsRemove("programs", id)
-    await fsRemove(`faculties/${item.facultyId}/programs`, id)
+    if (item.facultyId) {
+      await fsRemove(`faculties/${item.facultyId}/programs`, id)
+    }
 
     if (result) {
       await router.push({ name: "AdminPrograms" })
@@ -129,12 +146,12 @@ onMounted(() => getItem())
       <div class="card-body">
         <form @submit.prevent="updateItem">
           <div class="mb-3">
-            <label for="name" class="form-label">Título</label>
-            <input type="text" class="form-control" id="name" placeholder="Título" v-model="item.name" />
+            <label for="name" class="form-label fw-bold">Título *</label>
+            <input type="text" class="form-control" id="name" placeholder="Título *" v-model="item.name" />
           </div>
 
           <div class="mb-3">
-            <label class="form-check-label" for="isActive">Facultad</label>
+            <label class="form-label fw-bold" for="isActive">Facultad</label>
             <select class="form-select" v-model="item.facultyId" aria-label="Seleccionar">
               <option value="" selected>--- Seleccionar ---</option>
               <option v-for="faculty in faculties" :key="faculty.id" :value="faculty.id">{{ faculty.name }}</option>
@@ -151,7 +168,7 @@ onMounted(() => getItem())
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 d-none">
               <div class="mb-3">
                 <div class="form-check form-switch">
                   <input class="form-check-input" type="checkbox" role="switch" id="isLock" :checked="item?.isLock"

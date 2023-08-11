@@ -7,6 +7,7 @@ import UIMandatory from "./../../../components/UI/Mandatory.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 import { fsGet, fsRemove, fsUpdate } from "./../../../utils/firestore"
+import { IFaculty } from "./../../../utils/types"
 
 const route = useRoute()
 const router = useRouter()
@@ -15,7 +16,7 @@ const id = String(route.params.id)
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(true)
-const item = reactive({
+const item = reactive<IFaculty>({
   createdAt: "",
   id: "",
   isActive: false,
@@ -105,7 +106,7 @@ onMounted(() => getItem())
       <div class="card-body">
         <form @submit.prevent="updateItem">
           <div class="mb-3">
-            <label for="name" class="form-label">Título *</label>
+            <label for="name" class="form-label fw-bold">Título *</label>
             <input type="text" class="form-control" id="name" placeholder="Título *" v-model="item.name" required />
           </div>
 
@@ -140,13 +141,13 @@ onMounted(() => getItem())
             <div class="col-12 col-md-6">
               <div class="">
                 <h6 class="small">Creado:</h6>
-                <p class="pb-0 mb-0">{{ item.createdAt.split("T")[0] }}</p>
+                <p class="pb-0 mb-0">{{ item?.createdAt?.split("T")[0] }}</p>
               </div>
             </div>
             <div v-if="item.createdAt !== item.updatedAt" class="col-12 col-md-6">
               <div class="">
                 <h6 class="small">Modificado:</h6>
-                <p class="pb-0 mb-0">{{ item.updatedAt.split("T")[0] }}</p>
+                <p class="pb-0 mb-0">{{ item?.updatedAt?.split("T")[0] }}</p>
               </div>
             </div>
           </div>

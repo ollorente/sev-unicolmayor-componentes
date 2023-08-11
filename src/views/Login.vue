@@ -2,6 +2,8 @@
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import UIAlert from "./../components/UI/Alert.vue"
+import UISpinner from "./../components/UI/Spinner.vue"
 import { User } from "./../utils/types"
 import { auth } from './../utils/firebase'
 import { fsCreate, fsGet } from './../utils/firestore'
@@ -10,7 +12,7 @@ const router = useRouter()
 
 const Error = ref()
 const isError = ref(false)
-const isShow = ref(true)
+const isShow = ref(false)
 
 const signinGoogle = async () => {
   const provider = new GoogleAuthProvider()
@@ -180,4 +182,3 @@ body {
   z-index: 1500;
 }
 </style>
-../composables/firestore

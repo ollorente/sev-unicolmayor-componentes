@@ -15,7 +15,6 @@ import { fsCreate, fsList, fsListProgramsById } from "./../../../utils/firestore
 
 onAuthStateChanged(auth, (user) => {
   const uid: any = user?.uid;
-
   resource.elaborated.userId = String(uid)
 })
 const router = useRouter()
@@ -25,7 +24,6 @@ const isError = ref(false)
 const isShow = ref(false)
 const faculties = ref<IFaculty[]>([])
 const programs = ref<IProgram[]>([])
-
 const resource = reactive<IResource>({
   approved: {
     check: false,
@@ -70,6 +68,7 @@ const resource = reactive<IResource>({
 
 const addItem = async () => {
   isShow.value = true
+  console.log("🚀 ~ file: resourceNew.vue:77 ~ addItem ~ resource:", resource)
 
   try {
     if (
@@ -88,7 +87,7 @@ const addItem = async () => {
       }
     })
     console.log("🚀 ~ file: resourceNew.vue:88 ~ addItem ~ data:", data)
-
+return
     const result = await fsCreate("resources", data)
     console.log("🚀 ~ file: resourceNew.vue:41 ~ addItem ~ result:", result)
 
@@ -160,7 +159,7 @@ onMounted(() => getFaculties())
       <UIMandatory />
 
       <div class="card-body">
-        <form @prevent.default="addItem">
+        <form @submit.prevent="addItem">
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="title" v-model="resource.title" placeholder="Título *" autofocus
               required>
@@ -232,9 +231,7 @@ onMounted(() => getFaculties())
       </div>
     </div>
     <pre>{{ resource }}</pre>
-    <pre>{{ faculties }}</pre>
-    <pre>{{ programs }}</pre>
   </AdminLayout>
 </template>
 
-<style scoped></style>../../composables/firestore../../composables/useFirestore
+<style scoped></style>

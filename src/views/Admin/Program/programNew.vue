@@ -52,7 +52,9 @@ const addItem = async () => {
     const program: any = Program(item)
 
     const result = await fsCreate("programs", program)
-    await fsCreate(`faculties/${item.facultyId}/programs`, program)
+    if (item.facultyId) {
+      await fsCreate(`faculties/${item.facultyId}/programs`, program)
+    }
 
     if (result) {
       await router.push({ name: "AdminPrograms" })
@@ -86,7 +88,8 @@ onMounted(() => getItems())
           <form @submit.prevent="addItem">
             <div class="mb-3">
               <label for="name" class="form-label fw-bold">Título *</label>
-              <input type="text" class="form-control" id="name" placeholder="Título *" v-model="item.name" required autofocus />
+              <input type="text" class="form-control" id="name" placeholder="Título *" v-model="item.name" required
+                autofocus />
             </div>
 
             <div class="mb-3">

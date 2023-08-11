@@ -47,12 +47,11 @@ const logout = async () => {
       <div class="row">
 
         <nav class="navbar navbar-expand-lg col-lg-3 align-items-start">
-          <div class="container-fluid flex-lg-column">
-            <router-link :to="{ name: 'Home' }" class="navbar-brand fw-semibold">Programas virtuales</router-link>
-
+          <div class="w-100 flex-lg-column mb-3">
             <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#asideMenu">
               <span class="navbar-toggler-icon"></span>
             </button>
+            <h5 class="offcanvas-title fs-2 text-primary text-uppercase d-md-none">Programas virtuales</h5>
 
             <section id="asideMenu" class="offcanvas offcanvas-start" tabindex="-1">
               <div class="offcanvas-header" data-bs-theme="black">
@@ -77,8 +76,8 @@ const logout = async () => {
 
         <div class="col-12 col-lg-9">
 
-          <div class="d-none d-lg-block card border-0 shadow-sm mb-4">
-            <img src="../assets/img/196655.webp" alt="Pasillo" class="w-100 h-100 object-fit-cover border rounded" />
+          <div class="d-none d-lg-block card border-0 shadow-sm mb-4 pt-5 px-3 pb-3 fw-bold fs-1 text-white sky">
+            Programas virtuales
           </div>
 
           <slot></slot>
@@ -99,4 +98,42 @@ const logout = async () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.sky {
+  background-image: url("../assets/img/196655.webp");
+  background-position: center center;
+}
+
+.nav-link:hover, button:hover {
+  opacity: 0.6;
+  background-color: #ffc107;
+}
+
+nav,
+.offcanvas {
+  background-color: #f8f9fa;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+main {
+  min-height: calc(100vh - 6rem);
+}
+
+@media(max-width: 768px) {
+  .navbar-nav>li:hover {
+    background-color: #dbdbdb;
+  }
+
+  main {
+    min-height: calc(100vh - 17rem);
+  }
+}
+</style>

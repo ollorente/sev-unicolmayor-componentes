@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import { IUser, User } from "./../utils/types"
+import { User } from "./../utils/types"
 import { auth } from './../utils/firebase'
 import { fsCreate, fsGet } from './../utils/firestore'
 
@@ -18,7 +18,7 @@ const signinGoogle = async () => {
       const result = await fsGet("users", user.uid)
 
       if (!result) {
-        const data: IUser = User({
+        const data: any = User({
           email: user.email,
           id: user.uid,
           image: user.photoURL,
@@ -171,3 +171,4 @@ body {
   z-index: 1500;
 }
 </style>
+../composables/firestore

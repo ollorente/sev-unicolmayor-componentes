@@ -101,6 +101,10 @@ const logout = async () => {
 </template>
 
 <style scoped>
+.container-fluid {
+  scrollbar-gutter: stable;
+}
+
 .sky {
   background-image: url("../assets/img/196655.webp");
   background-position: center center;

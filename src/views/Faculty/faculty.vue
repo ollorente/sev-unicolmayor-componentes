@@ -13,7 +13,7 @@ const isShow = ref(true)
 <template>
   <CustomLayout>
     <UIHead back backUrl="/facultades">
-      facultad
+      Facultad
     </UIHead>
 
     <UISpinner v-if="isShow">Loading...</UISpinner>

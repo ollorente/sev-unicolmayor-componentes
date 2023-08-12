@@ -17,7 +17,7 @@ const items = ref<IResource[]>([])
 
 const getItems = async () => {
   try {
-    const result = await fsList("resoures")
+    const result = await fsList("resources")
 
     result.sort((a: any, b: any) => {
       if (a.name > b.name) {

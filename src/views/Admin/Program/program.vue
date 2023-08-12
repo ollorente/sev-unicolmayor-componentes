@@ -6,7 +6,7 @@ import UIAlert from "./../../../components/UI/Alert.vue"
 import UIMandatory from "./../../../components/UI/Mandatory.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
-import { IFaculty, IProgram } from "./../../../utils/types"
+import { IFaculty, IProgram, Program } from "./../../../utils/types"
 import { fsCreate, fsGet, fsList, fsRemove, fsUpdate } from "./../../../utils/firestore"
 
 const route = useRoute()
@@ -16,8 +16,8 @@ const id = String(route.params.id)
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(false)
-const faculties = ref<IFaculty[]>([])
 const oldFacultyId = ref<string>()
+const faculties = ref<IFaculty[]>([])
 const item = reactive<IProgram>({
   createdAt: "",
   facultyId: "",
@@ -60,11 +60,16 @@ const updateItem = async () => {
   try {
     isShow.value = true
 
-    const data: any = {
-      facultyId: item.facultyId,
-      isActive: item.isActive,
-      isLock: item.isLock,
-      name: item.name,
+    interface UProgram {
+      facultyId: string
+      isActive: boolean
+      isLock: boolean
+      name: string
+      updatedAt: string
+    }
+
+    const data: UProgram = {
+      ...Program(item),
       updatedAt: new Date().toISOString(),
     }
 

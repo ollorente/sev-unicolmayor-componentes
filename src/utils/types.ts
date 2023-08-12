@@ -48,6 +48,7 @@ export interface IResource extends IBase {
   teacher: string
   title: string
   unit: string
+  userId: string
 }
 
 export interface IRole extends IBase {
@@ -137,6 +138,7 @@ export const Resource = (db: IResource) => {
     title: String(db.title ? db.title.trim() : ""),
     unit: String(db.unit ? db.unit.trim() : ""),
     updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
+    userId: String(db.userId ? db.userId : ""),
   }
 }
 

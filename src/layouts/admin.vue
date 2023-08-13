@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { signOut } from "firebase/auth"
 import { auth } from "../utils/firebase"
 import AdminFooter from "./../components/Admin/Footer.vue"
 import AdminHeader from "./../components/Admin/Header.vue"
+import AdminTopMenu from "./../components/Admin/TopMenu.vue"
 
 const router = useRouter()
 
+const admin = ref()
+const superuser = ref()
 const links = [
   {
     icon: "֎",
@@ -28,11 +32,26 @@ const links = [
     title: "Programas",
     url: "/admin/programas"
   },
+  {
+    icon: "֎",
+    title: "Usuarios",
+    url: "/admin/usuarios"
+  },
 ]
+
+const current = localStorage.getItem("currentUser")
+if (current) {
+  const user = JSON.parse(current)
+
+  admin.value = user.roles.includes('admin')
+  superuser.value = user.roles.includes('superuser')
+}
 
 const logout = async () => {
   await signOut(auth)
     .then(() => {
+      localStorage.removeItem("currentUser")
+
       router.push({ name: "Login" })
     })
     .catch((error) => {
@@ -44,6 +63,9 @@ const logout = async () => {
 <template>
   <div class="bg-light overflow-auto" style="height: 100dvh">
     <div class="container-fluid">
+
+      <AdminTopMenu admin superuser />
+
       <div class="row">
 
         <div class="col-12">
@@ -52,12 +74,12 @@ const logout = async () => {
           </div>
         </div>
 
-        <nav class="navbar navbar-expand-lg col-lg-2 align-items-start">
-          <div class="w-100 flex-lg-column mb-3">
+        <nav class="navbar navbar-expand-md col-md-3 col-lg-2 align-items-start">
+          <div class="w-100 d-flex flex-row flex-lg-column mb-3">
             <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#asideMenu">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <h5 class="offcanvas-title fs-2 text-primary text-uppercase d-md-none">Programas virtuales</h5>
+            <h5 class="offcanvas-title fs-2 fw-bold text-uppercase d-md-none">Programas virtuales</h5>
 
             <section id="asideMenu" class="offcanvas offcanvas-start" tabindex="-1">
               <div class="offcanvas-header" data-bs-theme="black">
@@ -80,7 +102,7 @@ const logout = async () => {
           </div>
         </nav>
 
-        <div class="col-12 col-lg-10">
+        <div class="col-12 col-md-9 col-lg-10">
 
           <slot></slot>
 

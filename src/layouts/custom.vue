@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { signOut } from "firebase/auth"
 import { auth } from "../utils/firebase"
 import ClientFooter from "./../components/Client/Footer.vue"
 import ClientHeader from "./../components/Client/Header.vue"
+import ClientTopMenu from "./../components/Client/TopMenu.vue"
 
 const router = useRouter()
 
+const admin = ref()
+const superuser = ref()
 const links = [
   {
     icon: "֎",
@@ -30,9 +34,19 @@ const links = [
   },
 ]
 
+const current = localStorage.getItem("currentUser")
+if (current) {
+  const user = JSON.parse(current)
+
+  admin.value = user.roles.includes('admin')
+  superuser.value = user.roles.includes('superuser')
+}
+
 const logout = async () => {
   await signOut(auth)
     .then(() => {
+      localStorage.removeItem("currentUser")
+
       router.push({ name: "Login" })
     })
     .catch((error) => {
@@ -44,14 +58,17 @@ const logout = async () => {
 <template>
   <div class="bg-light overflow-auto" style="height: 100dvh">
     <div class="container py-3">
+
+      <ClientTopMenu admin superuser />
+
       <div class="row">
 
         <nav class="navbar navbar-expand-lg col-lg-3 align-items-start">
-          <div class="w-100 flex-lg-column mb-3">
+          <div class="w-100 d-flex flex-row flex-lg-column mb-3">
             <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#asideMenu">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <h5 class="offcanvas-title fs-2 text-primary text-uppercase d-md-none">Programas virtuales</h5>
+            <h5 class="offcanvas-title fs-2 fw-bold text-uppercase d-md-none">Programas virtuales</h5>
 
             <section id="asideMenu" class="offcanvas offcanvas-start" tabindex="-1">
               <div class="offcanvas-header" data-bs-theme="black">

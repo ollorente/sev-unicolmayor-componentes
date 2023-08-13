@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "./../../../utils/firebase"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
 import UIMandatory from "./../../../components/UI/Mandatory.vue"
@@ -9,12 +11,18 @@ import UIHead from "./../../../components/Admin/Head.vue"
 import { Faculty, IFaculty } from "./../../../utils/types"
 import { fsCreate } from "./../../../utils/firestore"
 
+onAuthStateChanged(auth, (user) => {
+  const uid: any = user?.uid;
+  currentUser.value = String(uid)
+})
 const router = useRouter()
 
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(false)
+const currentUser = ref()
 const item = reactive<IFaculty>({
+  modifiedBy: "",
   name: "",
   isActive: true,
 })
@@ -25,7 +33,10 @@ const addItem = async () => {
   isShow.value = true
 
   try {
-    const data = Faculty(item)
+    const data: any = {
+      ...Faculty(item),
+      modifiedBy: currentUser
+    }
 
     const result = await fsCreate("faculties", data)
 

@@ -3,16 +3,20 @@ import { onMounted, reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 // @ts-ignore
 import { VueEditor } from "vue3-editor"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "./../../../utils/firebase"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
-// import UICheckComponent from "./../../../components/UI/CheckComponent.vue"
-// import UICheckedComponent from "./../../../components/UI/CheckedComponent.vue"
 import UIMandatory from "./../../../components/UI/Mandatory.vue"
 import UISpinner from "./../../../components/UI/Spinner.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
 import { IFaculty, IProgram, IResource, RefResource, Resource } from "./../../../utils/types"
 import { fsCreate, fsGet, fsList, fsListProgramsById, fsRemove, fsUpdate } from "./../../../utils/firestore"
 
+onAuthStateChanged(auth, (user) => {
+  const uid: any = user?.uid;
+  currentUser.value = String(uid)
+})
 const route = useRoute()
 const router = useRouter()
 
@@ -20,62 +24,24 @@ const id = String(route.params.id)
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(true)
-// const itemApprovedCheck = ref(false)
-// const itemApprovedCreatedAt = ref()
-// const itemApprovedUpdatedAt = ref()
-// const itemApprovedUserId = ref()
-// const itemElaboratedCheck = ref(false)
-// const itemElaboratedCreatedAt = ref()
-// const itemElaboratedUpdatedAt = ref()
-// const itemElaboratedUserId = ref()
-// const itemIntegratedCheck = ref(false)
-// const itemIntegratedCreatedAt = ref()
-// const itemIntegratedUpdatedAt = ref()
-// const itemIntegratedUserId = ref()
-// const itemRevisedCheck = ref(false)
-// const itemRevisedCreatedAt = ref()
-// const itemRevisedUpdatedAt = ref()
-// const itemRevisedUserId = ref()
+const currentUser = ref()
 const oldFacultyId = ref<string>()
 const oldProgramId = ref<string>()
 const faculties = ref<IFaculty[]>([])
 const programs = ref<IProgram[]>([])
 const item = reactive<IResource>({
-  approved: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   bibliography: "",
   component: "",
   content: "",
   createdAt: "",
-  elaborated: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   facultyId: "",
   id: "",
   index: "",
-  integrated: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   introduction: "",
   isActive: true,
   isLock: false,
+  modifiedBy: "",
   programId: "",
-  revised: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   summary: "",
   teacher: "",
   title: "",
@@ -94,35 +60,20 @@ const getItem = async () => {
     const result: any = await fsGet("resources", id)
 
     if (result) {
-      item.approved.check = result.approved.check
-      item.approved.createdAt = result.approved.createdAt
-      item.approved.updatedAt = result.approved.updatedAt
-      item.approved.userId = result.approved.userId
       item.bibliography = result.bibliography
       item.component = result.component
       item.content = result.content
       // @ts-ignore
       item.createdAt = result.createdAt
-      item.elaborated.check = result.elaborated.check
-      item.elaborated.createdAt = result.elaborated.createdAt
-      item.elaborated.updatedAt = result.elaborated.updatedAt
-      item.elaborated.userId = result.elaborated.userId
       item.facultyId = result.facultyId
       // @ts-ignore
       item.id = result.id
       item.index = result.index
-      item.integrated.check = result.integrated.check
-      item.integrated.createdAt = result.integrated.createdAt
-      item.integrated.updatedAt = result.integrated.updatedAt
-      item.integrated.userId = result.integrated.userId
       item.introduction = result.introduction
       item.isActive = result.isActive
       item.isLock = result.isLock
+      item.modifiedBy = result.modifiedBy
       item.programId = result.programId
-      item.revised.check = result.revised.check
-      item.revised.createdAt = result.revised.createdAt
-      item.revised.updatedAt = result.revised.updatedAt
-      item.revised.userId = result.revised.userId
       item.summary = result.summary
       item.teacher = result.teacher
       item.title = result.title
@@ -130,22 +81,6 @@ const getItem = async () => {
       item.updatedAt = result.updatedAt
       item.userId = result.userId
 
-      // itemApprovedCheck.value = result.approved.check
-      // itemApprovedCreatedAt.value = result.approved.createdAt
-      // itemApprovedUpdatedAt.value = result.approved.updatedAt
-      // itemApprovedUserId.value = result.approved.userId
-      // itemElaboratedCheck.value = result.elaborated.check
-      // itemElaboratedCreatedAt.value = result.elaborated.createdAt
-      // itemElaboratedUpdatedAt.value = result.elaborated.updatedAt
-      // itemElaboratedUserId.value = result.elaborated.userId
-      // itemIntegratedCheck.value = result.integrated.check
-      // itemIntegratedCreatedAt.value = result.integrated.createdAt
-      // itemIntegratedUpdatedAt.value = result.integrated.updatedAt
-      // itemIntegratedUserId.value = result.integrated.userId
-      // itemRevisedCheck.value = result.revised.check
-      // itemRevisedCreatedAt.value = result.revised.createdAt
-      // itemRevisedUpdatedAt.value = result.revised.updatedAt
-      // itemRevisedUserId.value = result.revised.userId
       oldFacultyId.value = result.facultyId
       oldProgramId.value = result.programyId
     }
@@ -168,6 +103,7 @@ const updateItem = async () => {
 
     const data: any = {
       ...Resource(item),
+      modifiedBy: currentUser,
       updatedAt: new Date().toISOString(),
     }
 
@@ -346,25 +282,6 @@ onMounted(() => getItem())
             <vue-editor id="bibliography" v-model="item.bibliography" class="rounded" required></vue-editor>
           </div>
 
-          <!-- <div class="row g-2 mb-3 d-none">
-            <div class="col-md">
-              <UICheckedComponent title="Elaborado" id="itemElaboratedInput" :date="item?.elaborated?.updatedAt" v-model="item?.elaborated?.userId">Elaborado</UICheckedComponent>
-              <UICheckComponent :check="item?.elaborated?.check" id="itemElaboratedCheck" titleCheck="Elaborado" titleUncheck="No elaborado" />
-            </div>
-            <div class="col-md">
-              <UICheckedComponent title="Revisado" id="itemRevisedInput" :date="item?.revised?.updatedAt" v-model="item?.revised?.userId">Revisado</UICheckedComponent>
-              <UICheckComponent :check="item?.revised?.check" id="itemRevisedCheck" titleCheck="Revisado" titleUncheck="No revisado" />
-            </div>
-            <div class="col-md">
-              <UICheckedComponent title="Aprobado" id="itemApprovedInput" :date="item?.approved?.updatedAt" v-model="item?.approved?.userId">Aprobado</UICheckedComponent>
-              <UICheckComponent :check="item?.approved?.check" id="itemApprovedCheck" titleCheck="Aprobado" titleUncheck="No aprobado" />
-            </div>
-            <div class="col-md">
-              <UICheckedComponent title="Integrado" id="itemIntegratedInput" :date="item?.integrated?.updatedAt" v-model="item?.integrated?.userId">Integrado</UICheckedComponent>
-              <UICheckComponent :check="item?.integrated?.check" id="itemIntegratedCheck" titleCheck="Integrado" titleUncheck="No integrado" />
-            </div>
-          </div> -->
-
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="mb-3">
@@ -408,9 +325,13 @@ onMounted(() => getItem())
           </div>
         </form>
       </div>
-      <div class="card-footer bg-transparent text-end">
-        <button class="btn btn-outline-danger btn-sm rounded-pill mx-1 py-1 px-3" role="button"
-          @click="removeItem">Eliminar</button>
+      <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+        <span>
+          <RouterLink class="btn btn-primary btn-sm rounded-pill mx-1 py-1 px-3 d-none" role="button"
+            :to="{ name: 'AdminComponentStatus', params: { id: route.params.id } }">Estado</RouterLink>
+        </span>
+        <span><button class="btn btn-outline-danger btn-sm rounded-pill mx-1 py-1 px-3" role="button"
+            @click="removeItem">Eliminar</button></span>
       </div>
     </div>
     <pre class="d-none">{{ oldFacultyId }}</pre>

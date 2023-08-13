@@ -39,6 +39,8 @@ const signinGoogle = async () => {
         await fsCreate("users", data)
       }
 
+      localStorage.setItem("currentUser", JSON.stringify(result))
+
       await router.push({ name: "Home" })
     }
   } catch (error: any) {

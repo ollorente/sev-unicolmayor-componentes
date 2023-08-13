@@ -24,6 +24,7 @@ const item = reactive<IProgram>({
   id: "",
   isActive: false,
   isLock: false,
+  modifiedBy: "",
   name: "",
   updatedAt: "",
 })
@@ -44,6 +45,7 @@ const getItem = async () => {
     item.facultyId = result.facultyId
     item.isActive = result.isActive
     item.isLock = result.isLock
+    item.modifiedBy = result.modifiedBy
     item.name = result.name
     item.updatedAt = result.updatedAt
 
@@ -64,6 +66,7 @@ const updateItem = async () => {
       facultyId: string
       isActive: boolean
       isLock: boolean
+      modifiedBy: string
       name: string
       updatedAt: string
     }

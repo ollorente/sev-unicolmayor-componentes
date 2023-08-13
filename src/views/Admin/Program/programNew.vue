@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "./../../../utils/firebase"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
 import UIMandatory from "./../../../components/UI/Mandatory.vue"
@@ -9,16 +11,22 @@ import UIHead from "./../../../components/Admin/Head.vue"
 import { Program, IProgram, IFaculty } from "./../../../utils/types"
 import { fsCreate, fsList } from "./../../../utils/firestore"
 
+onAuthStateChanged(auth, (user) => {
+  const uid: any = user?.uid;
+  currentUser.value = String(uid)
+})
 const router = useRouter()
 
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(false)
+const currentUser = ref()
 const faculties = ref<IFaculty[]>([])
 const item = reactive<IProgram>({
-  name: "",
+  facultyId: "",
   isActive: true,
-  facultyId: ""
+  modifiedBy: "",
+  name: "",
 })
 
 const getItems = async () => {
@@ -36,10 +44,11 @@ const getItems = async () => {
     })
 
     faculties.value = result
-    isShow.value = false
   } catch (error) {
     Error.value = error
     isError.value = true
+  } finally {
+    isShow.value = false
   }
 }
 
@@ -49,11 +58,14 @@ const addItem = async () => {
   isShow.value = true
 
   try {
-    const program: any = Program(item)
+    const data: any = {
+      ...Program(item),
+      modifiedBy: currentUser
+    }
 
-    const result = await fsCreate("programs", program)
+    const result = await fsCreate("programs", data)
     if (item.facultyId) {
-      await fsCreate(`faculties/${item.facultyId}/programs`, program)
+      await fsCreate(`faculties/${item.facultyId}/programs`, data)
     }
 
     if (result) {

@@ -30,10 +30,11 @@ const getItems = async () => {
     })
 
     items.value = result
-    isShow.value = false
   } catch (error) {
     Error.value = error
     isError.value = true
+  } finally {
+    isShow.value = false
   }
 }
 

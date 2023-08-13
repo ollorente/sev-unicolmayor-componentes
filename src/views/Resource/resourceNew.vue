@@ -5,61 +5,38 @@ import { useRouter } from "vue-router"
 import { VueEditor } from "vue3-editor"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./../../utils/firebase"
-import CustomLayout from "./../../layouts/custom.vue"
+import ClientLayout from "./../../layouts/custom.vue"
 import UIAlert from "./../../components/UI/Alert.vue"
 import UIHead from "./../../components/Admin/Head.vue"
 import UIMandatory from "./../../components/UI/Mandatory.vue"
 import UISpinner from "./../../components/UI/Spinner.vue"
-import { DATE, IFaculty, IProgram, IResource, RefResource, Resource } from './../../utils/types'
+import { IFaculty, IProgram, IResource, RefResource, Resource } from './../../utils/types'
 import { fsCreate, fsList, fsListProgramsById } from "./../../utils/firestore"
 
 onAuthStateChanged(auth, (user) => {
   const uid: any = user?.uid;
-  item.elaborated.userId = String(uid)
-  item.userId = String(uid)
+  currentUser.value = String(uid)
 })
 const router = useRouter()
 
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(false)
+const currentUser = ref()
 const faculties = ref<IFaculty[]>([])
 const programs = ref<IProgram[]>([])
 const item = reactive<IResource>({
-  approved: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   bibliography: "",
   component: "",
   content: "",
   createdAt: "",
-  elaborated: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   facultyId: "",
   index: "",
-  integrated: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   introduction: "",
   isActive: true,
   isLock: false,
+  modifiedBy: "",
   programId: "",
-  revised: {
-    check: false,
-    createdAt: "",
-    updatedAt: "",
-    userId: ""
-  },
   summary: "",
   teacher: "",
   title: "",
@@ -78,15 +55,11 @@ const addItem = async () => {
       !item.unit
     ) return
 
-    const data = Resource({
-      ...item,
-      elaborated: {
-        createdAt: DATE,
-        updatedAt: DATE,
-        check: item.elaborated.check,
-        userId: item.elaborated.userId
-      }
-    })
+    const data: any = {
+      ...Resource(item),
+      modifiedBy: currentUser,
+      userId: currentUser
+    }
 
     const result = await fsCreate("resources", data)
 
@@ -99,7 +72,7 @@ const addItem = async () => {
     }
 
     if (result) {
-      await router.push({ name: "Components" })
+      await router.push({ name: "AdminComponents" })
     }
   } catch (error) {
     Error.value = error
@@ -152,7 +125,7 @@ onMounted(() => getFaculties())
 </script>
 
 <template>
-  <CustomLayout>
+  <ClientLayout>
     <UIHead back backUrl="/componentes">
       Agregar componente
     </UIHead>
@@ -235,7 +208,7 @@ onMounted(() => getFaculties())
         </form>
       </div>
     </div>
-  </CustomLayout>
+  </ClientLayout>
 </template>
 
 <style scoped></style>

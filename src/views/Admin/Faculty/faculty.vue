@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "./../../../utils/firebase"
 import { useRoute, useRouter } from "vue-router"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIAlert from "./../../../components/UI/Alert.vue"
@@ -9,6 +11,10 @@ import UIHead from "./../../../components/Admin/Head.vue"
 import { fsGet, fsRemove, fsUpdate } from "./../../../utils/firestore"
 import { IFaculty } from "./../../../utils/types"
 
+onAuthStateChanged(auth, (user) => {
+  const uid: any = user?.uid;
+  currentUser.value = String(uid)
+})
 const route = useRoute()
 const router = useRouter()
 
@@ -16,18 +22,18 @@ const id = String(route.params.id)
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(true)
+const currentUser = ref()
 const item = reactive<IFaculty>({
   createdAt: "",
   id: "",
   isActive: false,
   isLock: false,
+  modifiedBy: "",
   name: "",
   updatedAt: "",
 })
 
 const getItem = async () => {
-  isShow.value = true
-
   try {
     const result: any = await fsGet("faculties", id)
 
@@ -37,6 +43,7 @@ const getItem = async () => {
     item.id = result.id
     item.isActive = result.isActive
     item.isLock = result.isLock
+    item.modifiedBy = result.modifiedBy
     item.name = result.name
     item.updatedAt = result.updatedAt
   } catch (error) {
@@ -54,6 +61,7 @@ const updateItem = async () => {
     const result: any = await fsUpdate("faculties", id, {
       isActive: item.isActive,
       isLock: item.isLock,
+      modifiedBy: item.modifiedBy,
       name: item.name,
       updatedAt: new Date().toISOString(),
     })

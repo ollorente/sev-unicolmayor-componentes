@@ -23,6 +23,7 @@ export default () => {
       id: String(db.id ? db.id : v4()),
       isActive: Boolean(db.isActive === true ? true : false),
       isLock: Boolean(db.isLock === true ? true : false),
+      modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
       name: String(db.name.trim()),
       updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
     }
@@ -43,6 +44,7 @@ export default () => {
       id: String(db.id ? db.id : v4()),
       isActive: Boolean(db.isActive === true ? true : false),
       isLock: Boolean(db.isLock === true ? true : false),
+      modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
       name: String(db.name.trim()),
       updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
     }
@@ -59,26 +61,24 @@ export default () => {
 
   const Resource = (db: IResource) => {
     return {
-      approved: Object(db.approved ? db.approved : {}),
       bibliography: String(db.bibliography ? db.bibliography.trim() : ""),
       component: String(db.component ? db.component.trim() : ""),
       content: String(db.content ? db.content.trim() : ""),
       createdAt: String(db.createdAt ? db.createdAt : DATE),
-      elaborated: Object(db.elaborated ? db.elaborated : {}),
       id: String(db.id ? db.id : v4()),
       facultyId: String(db.facultyId ? db.facultyId : ""),
       index: String(db.index ? db.index.trim() : ""),
-      integrated: Object(db.integrated ? db.integrated : {}),
       introduction: String(db.introduction ? db.introduction.trim() : ""),
       isActive: Boolean(db.isActive === true ? true : false),
       isLock: Boolean(db.isLock === true ? true : false),
+      modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
       programId: String(db.programId ? db.programId : ""),
-      revised: Object(db.revised ? db.revised : {}),
       summary: String(db.summary ? db.summary.trim() : ""),
       teacher: String(db.teacher ? db.teacher.trim() : ""),
       title: String(db.title ? db.title.trim() : ""),
       unit: String(db.unit ? db.unit.trim() : ""),
       updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
+      userId: String(db.userId ? db.userId : ""),
     }
   }
 
@@ -99,6 +99,7 @@ export default () => {
       id: String(db.id ? db.id : v4()),
       isActive: Boolean(db.isActive === true ? true : false),
       isLock: Boolean(db.isLock === true ? true : false),
+      modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
       name: String(db.name.trim()),
       updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
     }
@@ -120,6 +121,7 @@ export default () => {
       image: String(db.image ? db.image.trim() : ""),
       isActive: Boolean(db.isActive === true ? true : false),
       isLock: Boolean(db.isLock === true ? true : false),
+      modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
       name: String(db.name ? db.name.trim() : ""),
       phone: String(db.phone ? db.phone.trim() : ""),
       provider: String(db.provider ? db.provider : "local"),
@@ -136,6 +138,8 @@ export default () => {
       name: String(db.name ? db.name.trim() : ""),
     }
   }
+
+
 
   return {
     DATE,

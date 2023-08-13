@@ -21,7 +21,9 @@ const items = ref<IResource[]>([])
 
 const getItems = async () => {
   try {
-    const result = await fsList(`prorgams/${id}/resources`)
+    // console.log("🚀 ~ file: resources.vue:24 ~ getItems ~ id:", id)
+    const result = await fsList(`programs/${id}/resources`)
+    // console.log("🚀 ~ file: resources.vue:26 ~ getItems ~ result:", result)
 
     result.sort((a: any, b: any) => {
       if (a.name > b.name) {
@@ -34,10 +36,11 @@ const getItems = async () => {
     })
 
     items.value = result
-    isShow.value = false
   } catch (error) {
     Error.value = error
     isError.value = true
+  } finally {
+    isShow.value = false
   }
 }
 

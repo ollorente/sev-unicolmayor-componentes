@@ -43,12 +43,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/Admin/Resource/resource.vue'),
     meta: { isAuthenticated: true }
   },
-  {
-    path: '/admin/componentes/:id/estado',
-    name: 'AdminComponentStatus',
-    component: () => import('./views/Admin/Resource/resourceStatus.vue'),
-    meta: { isAuthenticated: true }
-  },
+  // {
+  //   path: '/admin/componentes/:id/estado',
+  //   name: 'AdminComponentStatus',
+  //   component: () => import('./views/Admin/Resource/resourceStatus.vue'),
+  //   meta: { isAuthenticated: true }
+  // },
   {
     path: '/admin/facultades',
     name: 'AdminFaculties',
@@ -116,12 +116,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/Resource/resource.vue'),
     meta: { isAuthenticated: true }
   },
-  {
-    path: '/componentes/:id/estado',
-    name: 'ComponentStatus',
-    component: () => import('./views/Resource/resourceStatus.vue'),
-    meta: { isAuthenticated: true }
-  },
+  // {
+  //   path: '/componentes/:id/estado',
+  //   name: 'ComponentStatus',
+  //   component: () => import('./views/Resource/resourceStatus.vue'),
+  //   meta: { isAuthenticated: true }
+  // },
   {
     path: '/facultades',
     name: 'Faculties',

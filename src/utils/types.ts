@@ -11,12 +11,13 @@ interface IBase {
   readonly id?: string
   isActive?: boolean
   isLock?: boolean
+  modifiedBy?: string
   updatedAt?: string
 }
 
 export interface ICheck {
   check: boolean
-  createdAt: string
+  createdAt?: string
   updatedAt?: string
   userId: string
 }
@@ -33,17 +34,13 @@ export interface IProgram extends IBase {
 }
 
 export interface IResource extends IBase {
-  approved: ICheck
   bibliography: string
   component: string
   content: string
-  elaborated: ICheck
   facultyId: string
   index: string
-  integrated: ICheck
   introduction: string
   programId: string
-  revised: ICheck
   summary: string
   teacher: string
   title: string
@@ -58,11 +55,11 @@ export interface IRole extends IBase {
 
 export interface IUser extends IBase {
   email: string
-  image: string
-  name: string
-  phone: string
-  provider: string
-  roles: Array<string>
+  image?: string
+  name?: string
+  phone?: string
+  provider?: string
+  roles?: Array<string>
 }
 
 // = MODELS =========================================================
@@ -82,6 +79,7 @@ export const Faculty = (db: IFaculty) => {
     id: String(db.id ? db.id : v4()),
     isActive: Boolean(db.isActive === true ? true : false),
     isLock: Boolean(db.isLock === true ? true : false),
+    modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
     name: String(db.name.trim()),
     updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
   }
@@ -102,6 +100,7 @@ export const Program = (db: IProgram) => {
     id: String(db.id ? db.id : v4()),
     isActive: Boolean(db.isActive === true ? true : false),
     isLock: Boolean(db.isLock === true ? true : false),
+    modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
     name: String(db.name.trim()),
     updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
   }
@@ -118,21 +117,18 @@ export const RefProgram = (db: IProgram) => {
 
 export const Resource = (db: IResource) => {
   return {
-    approved: Object(db.approved ? db.approved : {}),
     bibliography: String(db.bibliography ? db.bibliography.trim() : ""),
     component: String(db.component ? db.component.trim() : ""),
     content: String(db.content ? db.content.trim() : ""),
     createdAt: String(db.createdAt ? db.createdAt : DATE),
-    elaborated: Object(db.elaborated ? db.elaborated : {}),
     id: String(db.id ? db.id : v4()),
     facultyId: String(db.facultyId ? db.facultyId : ""),
     index: String(db.index ? db.index.trim() : ""),
-    integrated: Object(db.integrated ? db.integrated : {}),
     introduction: String(db.introduction ? db.introduction.trim() : ""),
     isActive: Boolean(db.isActive === true ? true : false),
     isLock: Boolean(db.isLock === true ? true : false),
+    modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
     programId: String(db.programId ? db.programId : ""),
-    revised: Object(db.revised ? db.revised : {}),
     summary: String(db.summary ? db.summary.trim() : ""),
     teacher: String(db.teacher ? db.teacher.trim() : ""),
     title: String(db.title ? db.title.trim() : ""),
@@ -159,6 +155,7 @@ export const Role = (db: IRole) => {
     id: String(db.id ? db.id : v4()),
     isActive: Boolean(db.isActive === true ? true : false),
     isLock: Boolean(db.isLock === true ? true : false),
+    modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
     name: String(db.name.trim()),
     updatedAt: String(db.updatedAt ? db.updatedAt : DATE),
   }
@@ -180,6 +177,7 @@ export const User = (db: IUser) => {
     image: String(db.image ? db.image.trim() : ""),
     isActive: Boolean(db.isActive === true ? true : false),
     isLock: Boolean(db.isLock === true ? true : false),
+    modifiedBy: String(db.modifiedBy ? db.modifiedBy : ""),
     name: String(db.name ? db.name.trim() : ""),
     phone: String(db.phone ? db.phone.trim() : ""),
     provider: String(db.provider ? db.provider : "local"),

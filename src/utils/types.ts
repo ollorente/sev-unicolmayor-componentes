@@ -143,6 +143,7 @@ export const RefResource = (db: IResource) => {
     id: String(db.id ? db.id : v4()),
     isActive: Boolean(db.isActive === true ? true : false),
     teacher: String(db.teacher ? db.teacher.trim() : ""),
+    isLock: Boolean(db.isLock === true ? true : false),
     title: String(db.title ? db.title.trim() : ""),
     unit: String(db.unit ? db.unit.trim() : ""),
   }

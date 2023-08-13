@@ -44,6 +44,12 @@ const routes: RouteRecordRaw[] = [
     meta: { isAuthenticated: true }
   },
   {
+    path: '/admin/componentes/:id/estado',
+    name: 'AdminComponentStatus',
+    component: () => import('./views/Admin/Resource/resourceStatus.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
     path: '/admin/facultades',
     name: 'AdminFaculties',
     component: () => import('./views/Admin/Faculty/faculties.vue'),
@@ -79,6 +85,18 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/Admin/Program/program.vue'),
     meta: { isAuthenticated: true }
   },
+  {
+    path: '/admin/usuarios',
+    name: 'AdminUsers',
+    component: () => import('./views/Admin/User/users.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/admin/usuarios/:id',
+    name: 'AdminUser',
+    component: () => import('./views/Admin/User/user.vue'),
+    meta: { isAuthenticated: true }
+  },
   // = CLIENT =======================================================
   {
     path: '/componentes',
@@ -99,9 +117,9 @@ const routes: RouteRecordRaw[] = [
     meta: { isAuthenticated: true }
   },
   {
-    path: '/componentes/:id/editar',
-    name: 'ComponentEdit',
-    component: () => import('./views/Resource/resourceEdit.vue'),
+    path: '/componentes/:id/estado',
+    name: 'ComponentStatus',
+    component: () => import('./views/Resource/resourceStatus.vue'),
     meta: { isAuthenticated: true }
   },
   {
@@ -117,6 +135,18 @@ const routes: RouteRecordRaw[] = [
     meta: { isAuthenticated: true }
   },
   {
+    path: '/facultades/:id/componentes',
+    name: 'FacultyComponents',
+    component: () => import('./views/Faculty/resources.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/facultades/:id/programas',
+    name: 'FacultyPrograms',
+    component: () => import('./views/Faculty/programs.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
     path: '/programas',
     name: 'Programs',
     component: () => import('./views/Program/programs.vue'),
@@ -126,6 +156,12 @@ const routes: RouteRecordRaw[] = [
     path: '/programas/:id',
     name: 'Program',
     component: () => import('./views/Program/program.vue'),
+    meta: { isAuthenticated: true }
+  },
+  {
+    path: '/programas/:id/componentes',
+    name: 'ProgramComponents',
+    component: () => import('./views/Program/resources.vue'),
     meta: { isAuthenticated: true }
   },
   // = GENERAL ======================================================

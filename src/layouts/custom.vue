@@ -9,8 +9,9 @@ import ClientTopMenu from "./../components/Client/TopMenu.vue"
 
 const router = useRouter()
 
-const admin = ref()
-const superuser = ref()
+const admin = ref(false)
+const teacher = ref(false)
+const superuser = ref(false)
 const links = [
   {
     icon: "֎",
@@ -38,8 +39,9 @@ const current = localStorage.getItem("currentUser")
 if (current) {
   const user = JSON.parse(current)
 
-  admin.value = user.roles.includes('admin')
-  superuser.value = user.roles.includes('superuser')
+  admin.value = user.roles.includes('admin') ? true : false
+  teacher.value = user.roles.includes('teacher') ? true : false
+  superuser.value = user.roles.includes('superuser') ? true : false
 }
 
 const logout = async () => {
@@ -59,7 +61,7 @@ const logout = async () => {
   <div class="bg-light overflow-auto" style="height: 100dvh">
     <div class="container py-3">
 
-      <ClientTopMenu admin superuser />
+      <ClientTopMenu :admin="admin" :teacher="teacher" :superuser="superuser" />
 
       <div class="row">
 

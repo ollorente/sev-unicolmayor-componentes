@@ -9,8 +9,8 @@ import AdminTopMenu from "./../components/Admin/TopMenu.vue"
 
 const router = useRouter()
 
-const admin = ref()
-const superuser = ref()
+const admin = ref(false)
+const superuser = ref(false)
 const links = [
   {
     icon: "֎",
@@ -43,8 +43,8 @@ const current = localStorage.getItem("currentUser")
 if (current) {
   const user = JSON.parse(current)
 
-  admin.value = user.roles.includes('admin')
-  superuser.value = user.roles.includes('superuser')
+  admin.value = user.roles.includes('admin') ? true : false
+  superuser.value = user.roles.includes('superuser') ? true : false
 }
 
 const logout = async () => {
@@ -64,7 +64,7 @@ const logout = async () => {
   <div class="bg-light overflow-auto" style="height: 100dvh">
     <div class="container-fluid">
 
-      <AdminTopMenu admin superuser />
+      <AdminTopMenu :admin="admin" :superuser="superuser" />
 
       <div class="row">
 

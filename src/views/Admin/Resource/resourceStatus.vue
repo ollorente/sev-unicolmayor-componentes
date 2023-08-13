@@ -1,91 +1,91 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue"
+import { onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
-import { onAuthStateChanged } from "firebase/auth"
-import { auth } from "./../../../utils/firebase"
+// import { onAuthStateChanged } from "firebase/auth"
+// import { auth } from "./../../../utils/firebase"
 import AdminLayout from "./../../../layouts/admin.vue"
 import UIHead from "./../../../components/Admin/Head.vue"
-import UICheckedComponent from "./../../../components/UI/CheckedComponent.vue"
-import UICheckComponent from "./../../../components/UI/CheckComponent.vue"
-import { ICheck } from "./../../../utils/types"
-import { fsList } from "./../../../utils/firestore"
+// import UICheckedComponent from "./../../../components/UI/CheckedComponent.vue"
+// import UICheckComponent from "./../../../components/UI/CheckComponent.vue"
+// import { ICheck } from "./../../../utils/types"
+// import { fsList } from "./../../../utils/firestore"
 
-onAuthStateChanged(auth, (user) => {
-  const uid: any = user?.uid
-  currentuser.value = String(uid)
-})
+// onAuthStateChanged(auth, (user) => {
+//   const uid: any = user?.uid
+//   currentuser.value = String(uid)
+// })
 const route = useRoute()
 
-const id = String(route.params.id)
+// const id = String(route.params.id)
 const Error = ref()
 const isError = ref(false)
 const isShow = ref(true)
-const currentuser = ref()
-const approved = reactive<ICheck>({
-  check: false,
-  createdAt: "",
-  updatedAt: "",
-  userId: ""
-})
-const elaborated = reactive<ICheck>({
-  check: false,
-  createdAt: "",
-  updatedAt: "",
-  userId: ""
-})
-const integrated = reactive<ICheck>({
-  check: false,
-  createdAt: "",
-  updatedAt: "",
-  userId: ""
-})
-const revised = reactive<ICheck>({
-  check: false,
-  createdAt: "",
-  updatedAt: "",
-  userId: ""
-})
+// const currentuser = ref()
+// const approved = reactive<ICheck>({
+//   check: false,
+//   createdAt: "",
+//   updatedAt: "",
+//   userId: ""
+// })
+// const elaborated = reactive<ICheck>({
+//   check: false,
+//   createdAt: "",
+//   updatedAt: "",
+//   userId: ""
+// })
+// const integrated = reactive<ICheck>({
+//   check: false,
+//   createdAt: "",
+//   updatedAt: "",
+//   userId: ""
+// })
+// const revised = reactive<ICheck>({
+//   check: false,
+//   createdAt: "",
+//   updatedAt: "",
+//   userId: ""
+// })
 
 const getItem = async () => {
-  isShow.value = true
+  // isShow.value = true
 
-  try {
-    const resultApproved: any = await fsList(`resources/${id}/approved`)
-    console.log("🚀 ~ file: resourceStatus.vue:52 ~ getItem ~ resultApproved:", resultApproved)
-    approved.check = resultApproved.check
-    approved.createdAt = resultApproved.createdAt
-    approved.updatedAt = resultApproved.updatedAt
-    approved.userId = resultApproved.userId
+  // try {
+  //   const resultApproved: any = await fsList(`resources/${id}/approved`)
+  //   console.log("🚀 ~ file: resourceStatus.vue:52 ~ getItem ~ resultApproved:", resultApproved)
+  //   approved.check = resultApproved.check
+  //   approved.createdAt = resultApproved.createdAt
+  //   approved.updatedAt = resultApproved.updatedAt
+  //   approved.userId = resultApproved.userId
 
-    const resultElaborated: any = await fsList(`resources/${id}/elaborated`)
-    console.log("🚀 ~ file: resourceStatus.vue:54 ~ getItem ~ resultElaborated:", resultElaborated)
-    elaborated.check = resultElaborated.check
-    elaborated.createdAt = resultElaborated.createdAt
-    elaborated.updatedAt = resultElaborated.updatedAt
-    elaborated.userId = resultElaborated.userId
+  //   const resultElaborated: any = await fsList(`resources/${id}/elaborated`)
+  //   console.log("🚀 ~ file: resourceStatus.vue:54 ~ getItem ~ resultElaborated:", resultElaborated)
+  //   elaborated.check = resultElaborated.check
+  //   elaborated.createdAt = resultElaborated.createdAt
+  //   elaborated.updatedAt = resultElaborated.updatedAt
+  //   elaborated.userId = resultElaborated.userId
 
-    const resultIntegrated: any = await fsList(`resources/${id}/integrated`)
-    console.log("🚀 ~ file: resourceStatus.vue:56 ~ getItem ~ resultIntegrated:", resultIntegrated)
-    integrated.check = resultIntegrated.check
-    integrated.createdAt = resultIntegrated.createdAt
-    integrated.updatedAt = resultIntegrated.updatedAt
-    integrated.userId = resultIntegrated.userId
+  //   const resultIntegrated: any = await fsList(`resources/${id}/integrated`)
+  //   console.log("🚀 ~ file: resourceStatus.vue:56 ~ getItem ~ resultIntegrated:", resultIntegrated)
+  //   integrated.check = resultIntegrated.check
+  //   integrated.createdAt = resultIntegrated.createdAt
+  //   integrated.updatedAt = resultIntegrated.updatedAt
+  //   integrated.userId = resultIntegrated.userId
 
-    const resultRevised: any = await fsList(`resources/${id}/revised`)
-    console.log("🚀 ~ file: resourceStatus.vue:58 ~ getItem ~ resultRevised:", resultRevised)
-    revised.check = resultRevised.check
-    revised.createdAt = resultRevised.createdAt
-    revised.updatedAt = resultRevised.updatedAt
-    revised.userId = resultRevised.userId
-  } catch (error) {
-    Error.value = error
-    isError.value = true
-  } finally {
-    isShow.value = false
-  }
+  //   const resultRevised: any = await fsList(`resources/${id}/revised`)
+  //   console.log("🚀 ~ file: resourceStatus.vue:58 ~ getItem ~ resultRevised:", resultRevised)
+  //   revised.check = resultRevised.check
+  //   revised.createdAt = resultRevised.createdAt
+  //   revised.updatedAt = resultRevised.updatedAt
+  //   revised.userId = resultRevised.userId
+  // } catch (error) {
+  //   Error.value = error
+  //   isError.value = true
+  // } finally {
+  //   isShow.value = false
+  // }
 }
 
-const updateItem = () => { }
+// const updateItem = () => { }
 
 onMounted(() => getItem())
 </script>
@@ -104,7 +104,7 @@ onMounted(() => getItem())
       <UIMandatory />
 
       <div class="card-body">
-        <form @submit.prevent="updateItem">
+        <!-- <form @submit.prevent="updateItem">
           <div class="row g-2 mb-3 d-none">
             <div class="col-md">
               <UICheckedComponent title="Elaborado" id="elaboratedInput" :date="elaborated.updatedAt"
@@ -131,13 +131,13 @@ onMounted(() => getItem())
                 titleUncheck="No integrado" />
             </div>
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
-    <pre>{{ approved }}</pre>
+    <!-- <pre>{{ approved }}</pre>
     <pre>{{ elaborated }}</pre>
     <pre>{{ integrated }}</pre>
-    <pre>{{ revised }}</pre>
+    <pre>{{ revised }}</pre> -->
   </AdminLayout>
 </template>
 

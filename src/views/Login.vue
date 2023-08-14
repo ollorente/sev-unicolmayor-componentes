@@ -44,7 +44,7 @@ const signinGoogle = async () => {
       await router.push({ name: "Home" })
     }
   } catch (error: any) {
-    console.log("🚀 ~ file: Login.vue:33 ~ signinGoogle ~ error:", error)
+    // console.log("🚀 ~ file: Login.vue:33 ~ signinGoogle ~ error:", error)
     if (error.code === "auth/account-exists-with-different-credential") {
       alert("El usuario ya existe con otro proveedor")
     } else {
@@ -66,7 +66,7 @@ const signinGoogle = async () => {
         <img class="mb-4 mx-auto"
           src="https://res.cloudinary.com/un1c0lm4y0r/image/upload/v1666216346/mascota-subdireccion.png"
           alt="Mascota Eviut" style="width: 8rem" />
-        <h1 class="h3 mb-3 fw-normal text-center">Programas Virtuales</h1>
+        <h1 class="h3 mb-3 fw-normal text-center">Componentes Virtuales</h1>
 
         <button class="btn btn-danger w-100 py-2 rounded-pill border-0" type="button" @click="signinGoogle">
           <span>Entrar con</span> <br />

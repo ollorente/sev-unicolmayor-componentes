@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue"
+// import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { signOut } from "firebase/auth"
-import { auth } from "../utils/firebase"
+import { auth } from "./../utils/firebase"
 import AdminFooter from "./../components/Admin/Footer.vue"
 import AdminHeader from "./../components/Admin/Header.vue"
 import AdminTopMenu from "./../components/Admin/TopMenu.vue"
+import useRole from "./../composables/useRole"
 
 const router = useRouter()
 
-const admin = ref(false)
-const superuser = ref(false)
 const links = [
   {
     icon: "֎",
@@ -39,14 +38,6 @@ const links = [
   },
 ]
 
-const current = localStorage.getItem("currentUser")
-if (current) {
-  const user = JSON.parse(current)
-
-  admin.value = user.roles.includes('admin') ? true : false
-  superuser.value = user.roles.includes('superuser') ? true : false
-}
-
 const logout = async () => {
   await signOut(auth)
     .then(() => {
@@ -64,7 +55,7 @@ const logout = async () => {
   <div class="bg-light overflow-auto" style="height: 100dvh">
     <div class="container-fluid">
 
-      <AdminTopMenu :admin="admin" :superuser="superuser" />
+      <AdminTopMenu :admin="useRole.admin" :superuser="useRole.superuser" />
 
       <div class="row">
 

@@ -9,6 +9,7 @@ import CustomLayout from "./../../layouts/custom.vue"
 import UIAlert from "./../../components/UI/Alert.vue"
 import UISpinner from "./../../components/UI/Spinner.vue"
 import UIHead from "./../../components/Client/Head.vue"
+import useRole from "./../../composables/useRole"
 import { IFaculty, IProgram, IResource, RefResource, Resource } from "./../../utils/types"
 import { fsCreate, fsGet, fsList, fsListProgramsById, fsRemove, fsUpdate } from "./../../utils/firestore"
 
@@ -324,11 +325,23 @@ onMounted(() => getItem())
       </div>
       <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
         <span>
-          <RouterLink class="btn btn-primary btn-sm rounded-pill mx-1 py-1 px-3 d-none" role="button"
-            :to="{ name: 'ComponentStatus', params: { id: route.params.id } }">Estado</RouterLink>
+          <!-- <RouterLink class="btn btn-primary btn-sm rounded-pill mx-1 py-1 px-3 d-none" role="button"
+            :to="{ name: 'ComponentStatus', params: { id: route.params.id } }">Estado</RouterLink> -->
         </span>
         <span><button class="btn btn-outline-danger btn-sm rounded-pill mx-1 py-1 px-3" role="button"
             @click="removeItem">Eliminar</button></span>
+      </div>
+    </div>
+
+    <div v-if="useRole.admin && useRole.superuser" class="card border-0 shadow-sm my-3">
+      <div class="card-body">
+        <div v-html="item.index" class=""></div>
+        <hr />
+        <div v-html="item.introduction" class=""></div>
+        <hr />
+        <div v-html="item.content" class=""></div>
+        <hr />
+        <div v-html="item.bibliography" class=""></div>
       </div>
     </div>
   </CustomLayout>

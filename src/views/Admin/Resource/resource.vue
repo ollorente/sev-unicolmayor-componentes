@@ -326,10 +326,7 @@ onMounted(() => getItem())
         </form>
       </div>
       <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
-        <span>
-          <RouterLink class="btn btn-primary btn-sm rounded-pill mx-1 py-1 px-3 d-none" role="button"
-            :to="{ name: 'AdminComponentStatus', params: { id: route.params.id } }">Estado</RouterLink>
-        </span>
+        <span></span>
         <span><button class="btn btn-outline-danger btn-sm rounded-pill mx-1 py-1 px-3" role="button"
             @click="removeItem">Eliminar</button></span>
       </div>

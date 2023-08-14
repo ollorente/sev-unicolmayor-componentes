@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { signOut } from "firebase/auth"
 import { auth } from "../utils/firebase"
 import ClientFooter from "./../components/Client/Footer.vue"
 import ClientHeader from "./../components/Client/Header.vue"
 import ClientTopMenu from "./../components/Client/TopMenu.vue"
+import useRole from "./../composables/useRole"
 
 const router = useRouter()
 
-const admin = ref(false)
-const teacher = ref(false)
-const superuser = ref(false)
 const links = [
   {
     icon: "֎",
@@ -35,15 +32,6 @@ const links = [
   },
 ]
 
-const current = localStorage.getItem("currentUser")
-if (current) {
-  const user = JSON.parse(current)
-
-  admin.value = user.roles.includes('admin') ? true : false
-  teacher.value = user.roles.includes('teacher') ? true : false
-  superuser.value = user.roles.includes('superuser') ? true : false
-}
-
 const logout = async () => {
   await signOut(auth)
     .then(() => {
@@ -61,7 +49,7 @@ const logout = async () => {
   <div class="bg-light overflow-auto" style="height: 100dvh">
     <div class="container py-3">
 
-      <ClientTopMenu :admin="admin" :teacher="teacher" :superuser="superuser" />
+      <ClientTopMenu :admin="useRole.admin" :teacher="useRole.teacher" :superuser="useRole.superuser" />
 
       <div class="row">
 
@@ -80,7 +68,9 @@ const logout = async () => {
               <div class="offcanvas-body d-flex flex-column justify-content-between px-0">
                 <ul class="nav flex-column">
                   <li v-for="(link, index) in links" :key="index" class="nav-item p-3 py-1">
-                    <router-link :to="link.url" class="nav-link text-dark rounded-pill" :class="$route.path.includes(link.url) ? 'bg-warning' : ''">{{ link.icon ? link.icon : '&#9733' }} {{ link.title }}</router-link>
+                    <router-link :to="link.url" class="nav-link text-dark rounded-pill"
+                      :class="$route.path.includes(link.url) ? 'bg-warning' : ''">{{ link.icon ? link.icon : '&#9733' }}
+                      {{ link.title }}</router-link>
                   </li>
                 </ul>
                 <ul class="nav py-4">
@@ -127,7 +117,8 @@ const logout = async () => {
   background-position: center center;
 }
 
-.nav-link:hover, button:hover {
+.nav-link:hover,
+button:hover {
   opacity: 0.6;
   background-color: #ffc107;
 }
@@ -158,5 +149,4 @@ main {
   main {
     min-height: calc(100vh - 17rem);
   }
-}
-</style>
+}</style>
